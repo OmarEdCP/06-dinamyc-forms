@@ -3,6 +3,10 @@ import { FormArray, FormGroup, ValidationErrors } from "@angular/forms";
 export class FormUtils {
   // EXPRESIONES REGULARES
 
+  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+
   static getTextErrors(errors: ValidationErrors) {
     for (const key of Object.keys(errors)) {
       switch (key) {
@@ -12,13 +16,15 @@ export class FormUtils {
           return `Minimo de ${errors['minlength'].requiredLength} caracteres`;
         case 'min':
           return `Valor minimo de ${errors['min'].min}`;
+        case 'email':
+        return `El formato debe contener @ y un dominios (.com, .gob, etc)`
       }
     }
     return null;
   }
 
   static isValidField(form: FormGroup, fieldName: string): boolean | null {
-    return !!(form.controls[fieldName].invalid && form.controls[fieldName].touched);
+    return !!( (form.controls[fieldName].invalid && form.controls[fieldName].touched));
   }
 
   static getFieldError(form: FormGroup, fieldName: string): string | null {

@@ -29,11 +29,13 @@
                        placeholder="Agregar favorito"
                        [formControl] ="newFavorite"
                        (keydown.enter)="onAddToFavorites()"
+                       (keydown.enter)="$event.preventDefault()"
                        >
 
 
                 <button class="btn btn-outline-primary"
-                        type="button">
+                        type="button"
+                        (click)="onAddToFavorites()">
                     Agregar favorito
                 </button>
             </div>
@@ -66,7 +68,11 @@
 
             </div>
           }
-
+          @if (formUtils.isValidField(myForm,'favoriteGames')) {
+                     <span class="form-text text-danger">
+                            Minimo 2
+                     </span>
+                   }
         </div>
     </div>
 
@@ -76,9 +82,7 @@
         <div class="col-sm-12">
             <button type="submit"
                     class="btn btn-primary float-end"
-
                     >
-                    <!-- [disabled]="myForm.invalid" -->
                 Guardar
             </button>
         </div>
